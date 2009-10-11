@@ -1,0 +1,29 @@
+RFC822
+======
+
+Presently, the sole purpose of this gem is to parse and validate email
+addresses according to the spec (except where it makes most sense to
+deviate).
+
+USAGE
+=====
+
+To parse and validate a single email address, use RFC822::Address.build
+
+  require "rfc822"
+  email = RFC822::Address.build("john+nospam@example.com")
+  email.address # => "john+nospam@example.com"
+  email.valid? # => true
+
+Display names in email addresses are also fully supported:
+
+  email = RFC822::Address.build('"John Doe, III" <john@example.com>')
+  email.name # => "John Doe, III"
+  email.to_s # => "\"John Doe, III\" <john@example.com>"
+
+To parse and validate a list of email addresses, use RFC822::Address.parse.
+Addresses can be separated by commas or newlines.
+
+  emails = RFC822::Address.parse("john@example.com, jane@example.com")
+  emails.size # => 2
+  emails[1].address # => "jane@example.com"

@@ -68,16 +68,19 @@ class AddressTest < Test::Unit::TestCase
   end
 
   def test_malformed_addresses
-    addresses = RFC822::Address.parse("John <john@example.com>")
+    email = RFC822::Address.build("John <john@example.com>")
 
-    assert_equal "john@example.com", addresses[0].address
-    assert_equal "John", addresses[0].name
-  end
+    assert_equal "john@example.com", email.address
+    assert_equal "John", email.name
 
-  def test_malformed_addresses_2
-    addresses = RFC822::Address.parse("j\n\n\n")
+    email = RFC822::Address.build("")
+    assert_equal "", email.address
 
-    assert_equal "j", addresses[0].address
+    email = RFC822::Address.build("John Doe <john@example.com")
+    assert_equal "john@example.com", email.address
+
+    email = RFC822::Address.build('"')
+    assert_equal "", email.address
   end
 
   def test_split_addresses

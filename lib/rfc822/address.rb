@@ -19,7 +19,7 @@ class RFC822::Address
         mark = i += 1
 
         # We jump forward until we hit an un-escaped quote character...
-        i += 1 until address[i] == ?" && address[i - 1] != ?\\
+        i += 1 until (address[i] == ?" && address[i - 1] != ?\\) || !address[i]
 
         email.name = address[mark..i - 1]
       when ?<
@@ -29,7 +29,7 @@ class RFC822::Address
 
         mark = i += 1
 
-        i += 1 until address[i] == ?>
+        i += 1 until address[i] == ?> || !address[i]
 
         email.address = address[mark..i - 1]
         break
