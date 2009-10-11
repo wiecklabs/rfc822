@@ -95,6 +95,11 @@ class AddressTest < Test::Unit::TestCase
     assert_equal ['"John, Doe" <john@example.com>', 'jane@example.com', 'james@example.com'], addresses
   end
 
+  def test_split_empty_list
+    addresses = RFC822::Address.split(",,\r\n,\n\n")
+    assert_equal 0, addresses.size
+  end
+
   def test_valid
     valid_emails = [
       "john@example.com",

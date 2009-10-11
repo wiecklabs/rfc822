@@ -56,6 +56,7 @@ class RFC822::Address
     while i <= string.length
       if !mark
         i += 1 while TERMINALS_WITH_SPACE.include?(string[i])
+        break unless string[i]
       end
 
       mark ||= i
